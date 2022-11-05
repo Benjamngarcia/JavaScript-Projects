@@ -1,0 +1,23 @@
+:root{
+    --principal: #ffa801;
+    --principalclaro: #ffc048;
+    --rojoclaro: #ff5e57;
+    --rojofuerte: #ff3f34;
+}
+
+.color-navbar{
+    /* background: linear-gradient(to bottom, var(--principalclaro), var(--rojoclaro) 80%, var(--rojoclaro)); */
+    background-color: var(--principalclaro)
+}
+
+.btn-agregar{
+    border: 3px solid var(--principalclaro);
+    background-color: transparent;
+    color: var(--principal);
+    transition: all .5s ease;
+}
+
+.btn-agregar:hover{
+    background-color: var(--principalclaro);
+    color: white;
+}
