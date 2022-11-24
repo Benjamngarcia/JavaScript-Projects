@@ -45,7 +45,7 @@ export function NavBarLog( { user,logout }) {
                                     <li className="text-gray-600">
                                         {user.email}
                                     </li>
-                                    <li className="text-gray-600 hover:text-yellow-500">
+                                    <li className="bg-yellow-500 px-4 py-2 rounded text-gray-300 hover:text-gray-500">
                                         <button type="button" onClick={handleLogout} className="cursor-pointer">Cerrar sesión</button>
                                     </li>
                                 </ul>
