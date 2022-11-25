@@ -1,22 +1,24 @@
 import {Card, CardContent, CardMedia, CardActionArea, Typography } from '@mui/material';
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+  const { product } = props
+
   return (
-    <Card>
-      <CardActionArea>
+    <Card sx={{height: "100%"}}>
+      <CardActionArea href={`/product/${product.id}`}>
         <CardMedia
           component="img"
           height="200px"
-          image="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-          alt="title product"
+          image={product.image}
+          alt={product.title}
           sx={{  objectFit: "contain" }}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Title product
+          <Typography gutterBottom variant="h5" component="div" sx={{textOverflow: "ellipsis"}}>
+            {product.title}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            $ Price
+            ${product.price}
           </Typography>
         </CardContent>
       </CardActionArea>
