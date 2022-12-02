@@ -2,8 +2,11 @@ import { AppBar, Box, Toolbar, Typography, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Logo from './Logo';
 import Link from 'next/link';
+import useCart from '../../hooks/useCart';
 
 export const Header = () => {
+  const { productsCart } = useCart()
+
   return (
     <Box>
       <AppBar
@@ -17,7 +20,7 @@ export const Header = () => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            margin: {xs: "auto 5%", sm: "auto 25%"}
+            margin: { xs: "auto 5%", sm: "auto 25%" }
           }}
         >
           <Link href="/" className="header-link">
@@ -26,8 +29,10 @@ export const Header = () => {
               Ben Store
             </Typography>
           </Link>
-          <Badge color="error" badgeContent="4">
-            <ShoppingCartIcon sx={{ color: "black" }} />
+          <Badge color="error" badgeContent={productsCart}>
+            <Link href="/cart">
+              <ShoppingCartIcon sx={{ color: "black" }} />
+            </Link>
           </Badge>
         </Toolbar>
       </AppBar>

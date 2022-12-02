@@ -11,6 +11,7 @@ export async function getAllProductsApi() {
 }
 
 export async function getProductByUrl(path) {
+  console.log("🚀 ~ file: products.js:14 ~ getProductByUrl ~ path", path)
   try {
     const url = `https://fakestoreapi.com/products/${path}`
     const response = await fetch(url)

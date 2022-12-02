@@ -1,8 +1,10 @@
 import { Box, Grid, Typography, Rating, Stack, TextField, Button, ButtonGroup } from "@mui/material"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import useCart from "../../hooks/useCart"
 
 export const MainProduct = (props) => {
   const { product } = props
+  const { addProductCart } = useCart();
 
   return (
     <>
@@ -51,19 +53,11 @@ export const MainProduct = (props) => {
         </Box>
         <ButtonGroup aria-label="button group">
           <TextField type="number" defaultValue={1} sx={{ borderRadius: 0 }} />
-          <Button variant="contained" sx={{ borderRadius: 0, fontSize: "13px" }}>
+          <Button variant="contained" onClick={() => addProductCart(product.id)} sx={{ borderRadius: 0, fontSize: "13px" }}>
             <AddShoppingCartIcon />  Add to cart
           </Button>
         </ButtonGroup>
       </Grid>
     </>
-  )
-}
-
-function AddToCartButton() {
-  return (
-    <Button variant="contained" color="success" sx={{ height: "40px" }}>
-      Success
-    </Button>
   )
 }

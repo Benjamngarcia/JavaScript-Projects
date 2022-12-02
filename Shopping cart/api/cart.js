@@ -1,5 +1,4 @@
 import { size, includes, remove } from "lodash";
-// import { CART } from "../utils/constants";
 
 export function getProductsCart() {
   const cart = localStorage.getItem("cart");

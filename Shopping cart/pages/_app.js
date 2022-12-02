@@ -6,7 +6,6 @@ import "../sass/index.scss"
 function MyApp({ Component, pageProps }) {
   const [totalProductsCart, setTotalProductsCart] = useState(0)
   const [reloadCart, setReloadCart] = useState(false)
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setTotalProductsCart(countProductsCart)
