@@ -40,13 +40,10 @@ export function countProductsCart() {
 
 export function removeProductCart(product) {
   const cart = getProductsCart();
+  const cartFiltered = cart.filter(prod => prod != product)
 
-  remove(cart, (item) => {
-    return item === product;
-  });
-
-  if (size(cart) > 0) {
-    localStorage.setItem("cart", cart);
+  if (cart.length > 0) {
+    localStorage.setItem("cart", cartFiltered);
   } else {
     localStorage.removeItem("cart");
   }

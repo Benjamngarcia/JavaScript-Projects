@@ -27,30 +27,28 @@ function EmptyCart() {
 function FullCart(props) {
   const { products } = props;
   const [productsData, setProductsData] = useState(null);
-  console.log("🚀 ~ file: cart.js:31 ~ FullCart ~ productsData", productsData)
   const [reloadCart, setReloadCart] = useState(false);
 
   useEffect(() => {
     (async () => {
       const productsTemp = [];
-        for await (const product of products) {
-          const data = await getProductByUrl(product);
-          productsTemp.push(data);
-        }
-        setProductsData(productsTemp);
+      for await (const product of products) {
+        const data = await getProductByUrl(product);
+        productsTemp.push(data);
+      }
+      setProductsData(productsTemp);
     })();
-    // setReloadCart(false);
+    setReloadCart(false);
   }, [reloadCart]);
 
   if (!productsData) return null;
 
   return (
     <BasicLayout className="empty-cart">
-      hola
       <SummaryCart
         products={productsData}
         reloadCart={reloadCart}
-      // setReloadCart={setReloadCart}
+        setReloadCart={setReloadCart}
       />
     </BasicLayout>
   );
