@@ -43,7 +43,8 @@ export function removeProductCart(product) {
   const cartFiltered = cart.filter(prod => prod != product)
 
   if (cart.length > 0) {
-    localStorage.setItem("cart", cartFiltered);
+    localStorage.setItem("cart", cartFiltered)
+    return cartFiltered
   } else {
     localStorage.removeItem("cart");
   }

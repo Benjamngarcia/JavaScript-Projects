@@ -5,15 +5,16 @@ import useCart from "../hooks/useCart";
 import SummaryCart from "../components/Cart/SummaryCart";
 
 export default function Cart() {
-  const { getProductCart } = useCart();
+  const { getProductCart, removeProductCart } = useCart();
   const [products, setProducts] = useState(null)
 
   useEffect(() => {
     const productsCart = getProductCart();
+    console.log("🚀 ~ file: cart.js:13 ~ useEffect ~ productsCart", productsCart)
     setProducts(productsCart)
   }, [])
 
-  return !products ? <EmptyCart /> : <FullCart products={products} />;
+  return !products ? <EmptyCart /> : <FullCart products={products} removeProductCart={removeProductCart}/>;
 }
 
 function EmptyCart() {
@@ -25,7 +26,7 @@ function EmptyCart() {
 }
 
 function FullCart(props) {
-  const { products } = props;
+  const { products, removeProductCart } = props;
   const [productsData, setProductsData] = useState(null);
   const [reloadCart, setReloadCart] = useState(false);
 
@@ -41,6 +42,11 @@ function FullCart(props) {
     setReloadCart(false);
   }, [reloadCart]);
 
+  const removeProduct = (product) => {
+    setProductsData(removeProductCart(product));
+    setReloadCart(true);
+  };
+
   if (!productsData) return null;
 
   return (
@@ -49,6 +55,7 @@ function FullCart(props) {
         products={productsData}
         reloadCart={reloadCart}
         setReloadCart={setReloadCart}
+        removeProduct = {removeProduct}
       />
     </BasicLayout>
   );

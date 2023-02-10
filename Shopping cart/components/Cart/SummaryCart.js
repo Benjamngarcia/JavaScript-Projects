@@ -7,15 +7,15 @@ import {
   ListItemAvatar,
   Avatar,
   Typography,
-  IconButton
+  IconButton,
+  Box
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useCart from "../../hooks/useCart";
 
 export default function SummaryCart(props) {
-  const { products, reloadCart, setReloadCart } = props;
+  const { products, reloadCart, setReloadCart, removeProduct } = props;
   const [totalPrice, setTotalPrice] = useState(0);
-  const { removeProductCart } = useCart();
 
   useEffect(() => {
     let price = 0;
@@ -23,20 +23,15 @@ export default function SummaryCart(props) {
     setTotalPrice(price);
   }, [reloadCart, products]);
 
-  const removeProduct = (product) => {
-    removeProductCart(product);
-    setReloadCart(true);
-  };
-
   return (
     <>
       <List sx={{ width: '70%', margin: "3rem auto" }}>
         {
           products.map((product) => {
             return (
-              <>
-                <ListItem alignItems="flex-start"
-                  key={product.id}
+              <Box key={product.id}>
+                <ListItem 
+                  alignItems="flex-start"
                   secondaryAction={
                     <IconButton aria-label="comment" onClick={() => removeProduct(product.id)}>
                       <DeleteIcon />
@@ -74,8 +69,8 @@ export default function SummaryCart(props) {
                     sx={{ height: "5rem", margin: "auto 2rem" }}
                   />
                 </ListItem>
-                <Divider variant="inset" component="li" />
-              </>
+                <Divider variant="inset" component="li"/>
+              </Box>
             )
           })
         }
@@ -89,7 +84,6 @@ export default function SummaryCart(props) {
             sx={{ height: "5rem", margin: "auto 2rem" }}
           />
         </ListItem>
-        <Divider variant="inset" component="li" />
       </List>
     </>
   );
