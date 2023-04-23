@@ -9,8 +9,8 @@ function Filter(props: FilterProps): JSX.Element {
   const { filter, setFilter } = props
 
   return (
-    <section className="container mx-auto px-4 mt-8">
-      <div className="bg-white p-4 rounded-md flex justify-center gap-4">
+    <section className="container mx-auto px-4 mt-8 md:max-w-xl">
+      <div className="bg-white p-4 rounded-md flex justify-center gap-4 dark:bg-gray-800 transition-all duration-700">
         <button
           className={`
             ${filter === "all" ?

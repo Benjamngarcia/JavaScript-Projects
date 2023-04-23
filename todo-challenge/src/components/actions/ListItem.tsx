@@ -22,7 +22,7 @@ function ListItem(props: ListProps): JSX.Element {
         }>
         {todo?.completed && <CheckIcon />}
       </button>
-      <p className={`text-gray-600 grow ${todo?.completed && "line-through"}`}>{todo?.title}</p>
+      <p className={`text-gray-600 grow ${todo?.completed && "line-through"} dark:text-gray-300 transition-all duration-700`}>{todo?.title}</p>
       <button className="flex-none" onClick={() => todo?.id !== undefined && removeTodo(todo?.id)} ><CrossIcon /></button>
     </article>
   )
