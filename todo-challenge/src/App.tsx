@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { Todo } from "./interfaces/interfaces"
 import MoonIcon from "./components/icons/MoonIcon"
 import SunIcon from "./components/icons/SunIcon"
@@ -7,8 +8,16 @@ import List from "./components/actions/List"
 import Filter from "./components/actions/Filter"
 import Clear from "./components/actions/Clear"
 
-const initialStateTodos : Todo[] = JSON.parse(localStorage.getItem("todos") || "[]")
-const initialStateDarkMode : boolean = localStorage.getItem("theme") === "dark"
+const initialStateTodos: Todo[] = JSON.parse(localStorage.getItem("todos") || "[]")
+const initialStateDarkMode: boolean = localStorage.getItem("theme") === "dark"
+
+const reorder = (list : Todo[], startIndex : number, endIndex : number) => {
+  const result  = [...list]
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+
+  return result
+}
 
 function App(): JSX.Element {
   const [todos, setTodos] = useState<Todo[]>(initialStateTodos)
@@ -52,6 +61,20 @@ function App(): JSX.Element {
     setTodos(todos.filter((todo) => !todo.completed))
   }
 
+  const handleDragEnd = (result : DropResult) => {
+    const { destination, source } = result;
+    if (!destination) return;
+    if (
+        source.index === destination.index &&
+        source.droppableId === destination.droppableId
+    )
+        return;
+
+    setTodos((prevTasks) =>
+        reorder(prevTasks, source.index, destination.index)
+    );
+};
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark")
@@ -65,7 +88,7 @@ function App(): JSX.Element {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos))
   }, [todos])
-  
+
 
 
   return (
@@ -89,7 +112,13 @@ function App(): JSX.Element {
       </header>
       <main className="container mx-auto px-4 mt-8 md:max-w-xl">
         <Form createTodo={createTodo} />
-        <List todosList={filteredTodos()} updateTodo={updateTodo} removeTodo={removeTodo} />
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <List
+            todosList={filteredTodos()}
+            updateTodo={updateTodo}
+            removeTodo={removeTodo}
+          />
+        </DragDropContext>
         <Clear itemsLeft={itemsLeft} clearCompleted={clearCompleted} />
       </main>
       <Filter filter={filter} setFilter={setFilter} />

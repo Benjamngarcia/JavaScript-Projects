@@ -1,4 +1,6 @@
 import { Todo } from "../../interfaces/interfaces"
+import { Droppable, Draggable } from '@hello-pangea/dnd';
+
 import ListItem from "./ListItem"
 
 type todosListProps = {
@@ -10,11 +12,35 @@ type todosListProps = {
 function List(props: todosListProps): JSX.Element {
   const { todosList, updateTodo, removeTodo } = props
   return (
-    <div className="rounded-t-md bg-white mt-8 overflow-hidden dark:bg-gray-800 transition-all duration-700">
-      {todosList?.map((todo) =>
-        <ListItem key={todo.id} todo={todo} removeTodo={removeTodo} updateTodo={updateTodo}/>
+    <Droppable droppableId="todos">
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          className="rounded-t-md bg-white mt-8 overflow-hidden dark:bg-gray-800 transition-all duration-700">
+          {todosList?.map((todo, index) => (
+            <Draggable
+              key={todo.id}
+              index={index}
+              draggableId={String(todo.id)}
+            >
+              {(draggableProvided) => (
+                <ListItem
+                  ref={draggableProvided.innerRef}
+                  {...draggableProvided.dragHandleProps}
+                  {...draggableProvided.draggableProps}
+                  todo={todo}
+                  removeTodo={removeTodo}
+                  updateTodo={updateTodo}
+                />
+              )}
+            </Draggable>
+          ))}
+          {provided.placeholder}
+        </div>
       )}
-    </div>
+    </Droppable>
+
   )
 
 }
